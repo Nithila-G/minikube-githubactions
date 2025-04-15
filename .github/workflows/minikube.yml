@@ -1,1 +1,32 @@
+# .github/workflows/minikube.yml
+
+name: Minikube CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  minikube-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Minikube
+        uses: medyagh/setup-minikube@latest
+
+      - name: Start Minikube
+        run: minikube start --driver=docker
+
+      - name: Verify Kubernetes cluster
+        run: kubectl cluster-info
+
+      - name: Deploy manifests
+        run: |
+          kubectl apply -f k8s/
+          kubectl get all -A
 
