@@ -16,6 +16,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Say hello
+        run: echo "Hello, I'm Nithila 👋"
+
       - name: Setup Minikube
         uses: medyagh/setup-minikube@latest
 
@@ -26,7 +29,7 @@ jobs:
         run: kubectl cluster-info
 
       - name: Deploy manifests
-        run: |
-          kubectl apply -f k8s/
-          kubectl get all -A
+        run: kubectl apply -f k8s/
 
+      - name: List Kubernetes resources
+        run: kubectl get all
